@@ -2,6 +2,7 @@
 import { signUpSchema } from "@/utils";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { AuthInput } from "./AuthInput";
 
 export const RegisterForm = () => {
   const {
@@ -31,7 +32,13 @@ export const RegisterForm = () => {
           onSubmit={handleSubmit(handleRegisterSubmit)}
           className="mt-6 space-y-6"
         >
-          <input type="text" {...register("name")} />
+          <AuthInput
+            name="name"
+            type="text"
+            placeholder="Full Name"
+            register={register}
+            error={errors?.name?.message}
+          />
           <button type="submit">submit</button>
         </form>
       </div>
