@@ -7,14 +7,14 @@ import userSlice from "@/features/userSlice";
 
 // saveUserOnlyFilter
 const saveUserOnlyFilter = createFilter("user", ["user"]);
-
+ 
 // persist config
 const persistConfig = {
   key: "user",
   storage,
   whitelist: ["user"],
   transform: [saveUserOnlyFilter],
-};
+}; 
 
 const rootReducer = combineReducers({
   user: userSlice,
