@@ -2,7 +2,7 @@
 import { signUpSchema } from "@/utils";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { AuthInput } from "./AuthInput";
+import { AuthInput } from "@/components";
 
 export const RegisterForm = () => {
   const {
@@ -38,6 +38,27 @@ export const RegisterForm = () => {
             placeholder="Full Name"
             register={register}
             error={errors?.name?.message}
+          />
+          <AuthInput
+            name="email"
+            type="text"
+            placeholder="Email Address"
+            register={register}
+            error={errors?.email?.message}
+          />
+          <AuthInput
+            name="status"
+            type="text"
+            placeholder="Status"
+            register={register}
+            error={errors?.status?.message}
+          />
+          <AuthInput
+            name="password"
+            type="text"
+            placeholder="Password"
+            register={register}
+            error={errors?.password?.message}
           />
           <button type="submit">submit</button>
         </form>
