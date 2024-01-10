@@ -2,17 +2,20 @@
 import { signUpSchema } from "@/utils";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { AuthInput } from "@/components";
+import { AuthInput, Picture } from "@/components";
 import { useDispatch, useSelector } from "react-redux";
 import PulseLoader from "react-spinners/PulseLoader";
 import { ROUTES } from "@/routes";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "@/features";
+import { useState } from "react";
 
 export const RegisterForm = () => {
   const dispatch: any = useDispatch();
   const navigate = useNavigate();
   const { status, error } = useSelector((status: any) => status.user);
+  const [picture, setPicture] = useState();
+  const [readablePicture, setReadablePicture] = useState("");
   const {
     register,
     handleSubmit,
@@ -21,16 +24,16 @@ export const RegisterForm = () => {
     resolver: yupResolver(signUpSchema),
   });
   const handleRegisterSubmit = async (data: any) => {
-    const res = await dispatch(registerUser({ ...data, picture: "" }));
+    const res = await dispatch(registerUser({ ...data, picture }));
     if (res.payload.user) {
-      navigate("/"); 
+      navigate("/");
     }
   };
-  
+
   return (
-    <div className="h-screen w-full flex items-center justify-center overflow-hidden">
+    <div className="min-h-screen w-full flex items-center justify-center overflow-hidden">
       {/* Container */}
-      <div className="max-w-md space-y-8 p-10 dark:bg-dark_bg_2 rounded-xl">
+      <div className="w-full max-w-md space-y-8 p-10 dark:bg-dark_bg_2 rounded-xl">
         {/* Heading */}
         <div className="text-center dark:text-dark_text_1">
           <h2 className="mt-6 text-3xl font-bold">Welcome</h2>
@@ -58,7 +61,7 @@ export const RegisterForm = () => {
           <AuthInput
             name="status"
             type="text"
-            placeholder="Status"
+            placeholder="Status (Optional)"
             register={register}
             error={errors?.status?.message}
           />
@@ -68,6 +71,12 @@ export const RegisterForm = () => {
             placeholder="Password"
             register={register}
             error={errors?.password?.message}
+          />
+          {/* Picture */}
+          <Picture
+            setReadablePicture={setReadablePicture}
+            setPicture={setPicture}
+            readablePicture={readablePicture}
           />
           {/* if we have an error */}
           {error ? (
