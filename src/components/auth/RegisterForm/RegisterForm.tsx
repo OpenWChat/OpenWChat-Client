@@ -6,11 +6,12 @@ import { AuthInput } from "@/components";
 import { useDispatch, useSelector } from "react-redux";
 import PulseLoader from "react-spinners/PulseLoader";
 import { ROUTES } from "@/routes";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "@/features";
 
 export const RegisterForm = () => {
   const dispatch: any = useDispatch();
+  const navigate = useNavigate();
   const { status, error } = useSelector((status: any) => status.user);
   const {
     register,
@@ -19,9 +20,13 @@ export const RegisterForm = () => {
   } = useForm({
     resolver: yupResolver(signUpSchema),
   });
-  const handleRegisterSubmit = (data: any) => {
-    dispatch(registerUser({ data, picture: "" }));
+  const handleRegisterSubmit = async (data: any) => {
+    const res = await dispatch(registerUser({ ...data, picture: "" }));
+    if (res.payload.user) {
+      navigate("/"); 
+    }
   };
+  
   return (
     <div className="h-screen w-full flex items-center justify-center overflow-hidden">
       {/* Container */}
