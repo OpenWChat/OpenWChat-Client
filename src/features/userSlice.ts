@@ -1,4 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+
+const AUTH_ENDPOINT = `${import.meta.env.VITE_API_ENDPOINT}/auth`;
 
 const initialState = {
   status: "",
@@ -12,6 +16,20 @@ const initialState = {
     token: "",
   },
 };
+
+export const registerUser = createAsyncThunk(
+  "auth/register",
+  async (values: any, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(`${AUTH_ENDPOINT}/register`, {
+        ...values,
+      });
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.error.message);
+    }
+  }
+);
 
 export const userSlice = createSlice({
   name: "user",
@@ -29,6 +47,20 @@ export const userSlice = createSlice({
         token: "",
       };
     },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(registerUser.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.user = action.payload.user;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload as string;
+      });
   },
 });
 
