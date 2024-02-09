@@ -9,7 +9,7 @@ const initialState = {
   error: "",
   user: {
     id: "",
-    name: "ali",
+    name: "",
     email: "",
     pictures: "",
     status: "",
@@ -26,7 +26,21 @@ export const registerUser = createAsyncThunk(
       });
       return data;
     } catch (error: any) {
-      return rejectWithValue(error.response.data.error.message);
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const loginUser = createAsyncThunk(
+  "auth/login",
+  async (values: any, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(`${AUTH_ENDPOINT}/login`, {
+        ...values,
+      });
+      return data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
@@ -47,6 +61,9 @@ export const userSlice = createSlice({
         token: "",
       };
     },
+    changeStatus: (state, action) => {
+      state.status = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -55,14 +72,27 @@ export const userSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.status = "succeeded";
+        state.error = "";
         state.user = action.payload.user;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.payload as string;
+        state.error = action.payload as any;
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.error = "";
+        state.user = action.payload.user;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload as any;
       });
   },
 });
 
-export const { logout } = userSlice.actions;
+export const { logout, changeStatus } = userSlice.actions;
 export default userSlice.reducer;

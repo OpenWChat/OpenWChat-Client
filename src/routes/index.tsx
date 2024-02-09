@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import React, { Suspense } from "react";
 
 // Pages
@@ -14,14 +14,10 @@ export const ROUTES = {
   register: "/register",
 };
 
-export const router = createBrowserRouter([
+export const mainRouter = createBrowserRouter([
   {
     path: ROUTES.home,
-    element: (
-      <Suspense>
-        <HomePage />
-      </Suspense>
-    ),
+    element: <Navigate to={ROUTES.login} />,
   },
   {
     path: ROUTES.login,
@@ -38,5 +34,23 @@ export const router = createBrowserRouter([
         <RegisterPage />
       </Suspense>
     ),
+  },
+]);
+export const userRouter = createBrowserRouter([
+  {
+    path: ROUTES.home,
+    element: (
+      <Suspense>
+        <HomePage />
+      </Suspense>
+    ),
+  },
+  {
+    path: ROUTES.login,
+    element: <Navigate to={ROUTES.home} />,
+  },
+  {
+    path: ROUTES.register,
+    element: <Navigate to={ROUTES.home} />,
   },
 ]);
