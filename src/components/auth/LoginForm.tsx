@@ -21,9 +21,9 @@ export const LoginForm = () => {
     resolver: yupResolver(signInSchema),
   });
   const handleLoginSubmit = async (data: any) => {
-    const res = await dispatch(loginUser({...data}))
+    const res = await dispatch(loginUser({ ...data }));
     if (res?.payload?.user) {
-      navigate("/");
+      navigate(ROUTES.home);
     }
   };
 

@@ -40,7 +40,7 @@ export const RegisterForm = () => {
       res = await dispatch(registerUser({ ...data, picture: "" }));
     }
     if (res?.payload?.user) {
-      navigate("/");
+      navigate(ROUTES.home);
     }
   };
   const uploadImage = async () => {
