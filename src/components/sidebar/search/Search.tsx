@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FilterIcon, ReturnIcon, SearchIcon } from "@/svg";
 import { useState } from "react";
 
