@@ -4,20 +4,22 @@ import createFilter from "redux-persist-transform-filter";
 import storage from "redux-persist/lib/storage";
 // slices
 import userSlice from "@/features/userSlice";
+import chatSlice from "@/features/chatSlice";
 
 // saveUserOnlyFilter
 const saveUserOnlyFilter = createFilter("user", ["user"]);
- 
+
 // persist config
 const persistConfig = {
   key: "user",
   storage,
   whitelist: ["user"],
   transform: [saveUserOnlyFilter],
-}; 
+};
 
 const rootReducer = combineReducers({
   user: userSlice,
+  chat: chatSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
