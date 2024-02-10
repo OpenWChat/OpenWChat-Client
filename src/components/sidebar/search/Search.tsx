@@ -1,15 +1,16 @@
-import { ReturnIcon, SearchIcon } from "@/svg";
+import { FilterIcon, ReturnIcon, SearchIcon } from "@/svg";
 import { useState } from "react";
 
 export const Search = ({ searchLength }: { searchLength: any }) => {
   const [show, setShow] = useState(false);
+  const handleSearch = (e) => {};
   return (
     <div className="h-[49px] py-1.5">
       {/* Container */}
       <div className="px-[10px]">
         {/* Search Input Container */}
         <div className="flex items-center gap-x-2">
-          <div className="w-full dark:bg-dark_bg_2 rounded-lg pl-2">
+          <div className="w-full flex dark:bg-dark_bg_2 rounded-lg pl-2">
             {show || searchLength > 0 ? (
               <span className="w-8 flex items-center justify-center rotateAnimation">
                 <ReturnIcon className="fill-green_1 w-5" />
@@ -24,8 +25,13 @@ export const Search = ({ searchLength }: { searchLength: any }) => {
               placeholder="Search or start a new chat"
               className="input"
               onFocus={() => setShow(true)}
+              onBlur={() => searchLength === 0 && setShow(false)}
+              onKeyDown={(e) => handleSearch(e)}
             />
           </div>
+          <button className="btn">
+            <FilterIcon className="dark:fill-dark_svg_2" />
+          </button>
         </div>
       </div>
     </div>
