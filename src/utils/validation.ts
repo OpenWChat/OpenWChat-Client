@@ -20,3 +20,11 @@ export const signUpSchema = yup.object({
       "Password must contain atleast 6 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character."
     ),
 });
+
+export const signInSchema = yup.object({
+  email: yup
+    .string()
+    .required("Email address is required.")
+    .email("Invalid email address."),
+  password: yup.string().required("Password is required"),
+});
