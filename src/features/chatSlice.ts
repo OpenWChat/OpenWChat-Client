@@ -14,7 +14,7 @@ const initialState = {
   notifications: [],
 };
 
-export const getConversations = createAsyncThunk(
+export const getConversations:any = createAsyncThunk(
   "conversation/all",
   async (token, { rejectWithValue }) => {
     try {
