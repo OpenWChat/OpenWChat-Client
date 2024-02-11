@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Sidebar } from "@/components";
 import { getConversations } from "@/features";
@@ -7,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 const Home = () => {
   const dispatch: any = useDispatch();
   const { user } = useSelector((state: any) => state.user);
-
   // get conversation
   useEffect(() => {
     if (user?.token) {

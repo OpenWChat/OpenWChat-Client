@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 export const SideBarHeader = () => {
   const { user } = useSelector((state: any) => state.user);
+  
   return (
     <div className="h-[50px] dark:bg-dark_bg_2 flex items-center p16">
       {/* container */}

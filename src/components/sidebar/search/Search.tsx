@@ -4,7 +4,9 @@ import { useState } from "react";
 
 export const Search = ({ searchLength }: { searchLength: any }) => {
   const [show, setShow] = useState(false);
-  const handleSearch = (e) => {};
+  const handleSearch = (e: any) => {
+    console.log(e);
+  };
   return (
     <div className="h-[49px] py-1.5">
       {/* Container */}
