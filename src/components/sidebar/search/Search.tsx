@@ -1,11 +1,36 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FilterIcon, ReturnIcon, SearchIcon } from "@/svg";
+import axios from "axios";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
-export const Search = ({ searchLength }: { searchLength: any }) => {
+export const Search = ({
+  searchLength,
+  setSearchResults,
+}: {
+  searchLength: any;
+  setSearchResults: any;
+}) => {
+  const { user } = useSelector((state: any) => state.user);
   const [show, setShow] = useState(false);
-  const handleSearch = (e: any) => {
-    console.log(e);
+  const handleSearch = async (e: any) => {
+    if (e.target.value && e.key === "Enter") {
+      try {
+        const { data } = await axios.get(
+          `${import.meta.env.VITE_API_ENDPOINT}/user?search=${e.target.value}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        );
+        setSearchResults(data);
+      } catch (error: any) {
+        console.log(error.response.data.error.message);
+      }
+    } else {
+      setSearchResults([]);
+    }
   };
   return (
     <div className="h-[49px] py-1.5">

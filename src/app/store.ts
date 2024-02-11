@@ -6,10 +6,10 @@ import storage from "redux-persist/lib/storage";
 import userSlice from "@/features/userSlice";
 import chatSlice from "@/features/chatSlice";
 
-// saveUserOnlyFilter
+//saveUserOnlyFilter
 const saveUserOnlyFilter = createFilter("user", ["user"]);
 
-// persist config
+//persist config
 const persistConfig = {
   key: "user",
   storage,
