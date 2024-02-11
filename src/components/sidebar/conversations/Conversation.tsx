@@ -1,4 +1,5 @@
-export const Conversation = ({ convo }) => {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const Conversation = ({ convo }: { convo: any }) => {
   return (
     <li className="list-none h-[72px] w-full dark:bg-dark_bg_1 hover:dark:bg-dark_bg_2 cursor-pointer dark:text-dark_text_1 px-[10px]">
       <div className="relative w-full flex items-center justify-between py-[10px]">
@@ -18,6 +19,14 @@ export const Conversation = ({ convo }) => {
             <h1 className="font-bold flex items-center gap-x-2">
               {convo.name}
             </h1>
+            {/* conversation message */}
+            <div>
+              <div className="flex items-center gap-x-1 dark:text-dark_text_2">
+                <div className="flex-1 items-center gap-x-1 dark:text-dark_text_2">
+                  <p>{convo.latestMessage.message}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
