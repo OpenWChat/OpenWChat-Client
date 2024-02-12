@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Sidebar } from "@/components";
+import { ChatContainer, Sidebar } from "@/components";
 import { WhatsAppHome } from "@/components";
 import { getConversations } from "@/features";
 import { useEffect } from "react";
@@ -24,7 +24,7 @@ const Home = () => {
       <div className="container h-screen flex py-[19px]">
         {/* Sidebar */}
         <Sidebar />
-        {activeConversation._id ? "home" : <WhatsAppHome />}
+        {activeConversation._id ? <ChatContainer /> : <WhatsAppHome />}
       </div>
     </div>
   );
