@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { open_create_conversation } from "@/features";
-import { dateHandler, getConversationId } from "@/utils";
+import { capitalize, dateHandler, getConversationId } from "@/utils";
 import { useDispatch, useSelector } from "react-redux";
 
 export const Conversation = ({ convo }: { convo: any }) => {
@@ -33,7 +33,7 @@ export const Conversation = ({ convo }: { convo: any }) => {
           <div className="w-full flex flex-col">
             {/* conversation name */}
             <h1 className="font-bold flex items-center gap-x-2">
-              {convo.name}
+              {capitalize(convo.name)}
             </h1>
             {/* conversation message */}
             <div>
