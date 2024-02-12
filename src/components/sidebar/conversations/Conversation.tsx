@@ -1,9 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { dateHandler } from "@/utils";
+import { open_create_conversation } from "@/features";
+import { dateHandler, getConversationId } from "@/utils";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Conversation = ({ convo }: { convo: any }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: any) => state.user);
+  const values = {
+    receiver_id: getConversationId(user, convo.users),
+    token: user.token,
+  };
+  const openConversation = () => {
+    dispatch(open_create_conversation(values));
+  };
   return (
-    <li className="list-none h-[72px] w-full dark:bg-dark_bg_1 hover:dark:bg-dark_bg_2 cursor-pointer dark:text-dark_text_1 px-[10px]">
+    <li
+      onClick={() => openConversation()}
+      className="list-none h-[72px] w-full dark:bg-dark_bg_1 hover:dark:bg-dark_bg_2 cursor-pointer dark:text-dark_text_1 px-[10px]"
+    >
       <div className="relative w-full flex items-center justify-between py-[10px]">
         {/* left side */}
         <div className="flex items-center gap-x-3">

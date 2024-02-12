@@ -10,6 +10,7 @@ const Home = () => {
   const dispatch: any = useDispatch();
   const { user } = useSelector((state: any) => state.user);
   const { activeConversation } = useSelector((state: any) => state.chat);
+  console.log(activeConversation);
 
   // get conversation
   useEffect(() => {
