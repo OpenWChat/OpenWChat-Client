@@ -1,7 +1,22 @@
+import { open_create_conversation } from "@/features";
+import { useDispatch, useSelector } from "react-redux";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const Contact = ({ contact }: { contact: any }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: any) => state.user);
+  const values = {
+    receiver_id: contact._id,
+    token: user.token,
+  };
+  const openConversation = () => {
+    dispatch(open_create_conversation(values));
+  };
   return (
-    <li className="list-none h-[72px] hover:dark:bg-dark_bg_2 cursor-pointer dark:text-dark_text_1 px-[10px]">
+    <li
+      onClick={() => openConversation()}
+      className="list-none h-[72px] hover:dark:bg-dark_bg_2 cursor-pointer dark:text-dark_text_1 px-[10px]"
+    >
       {/* Container */}
       <div className="flex items-center gap-x-3 py-[10px]">
         {/* Contact info */}
