@@ -5,6 +5,7 @@ import { ChatHeader } from "./header";
 import { ChatMessages } from "./messages";
 import { useEffect } from "react";
 import { getConversationMessages } from "@/features";
+import { ChatActions } from "./actions";
 
 export const ChatContainer = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,8 @@ export const ChatContainer = () => {
         <ChatHeader />
         {/* Chat Messages */}
         <ChatMessages />
+        {/* Chat Action */}
+        <ChatActions />
       </div>
     </div>
   );
