@@ -44,7 +44,10 @@ export const Search = ({
                 <ReturnIcon className="fill-green_1 w-5" />
               </span>
             ) : (
-              <span className="w-8 flex items-center justify-center">
+              <span
+                className="w-8 flex items-center justify-center cursor-pointer"
+                onClick={() => setSearchResults([])}
+              >
                 <SearchIcon className="dark:fill-dark_svg_2 w-5" />
               </span>
             )}
