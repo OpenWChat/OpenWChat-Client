@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { SendIcon } from "@/svg";
 import { Attachments } from "./Attachments";
-import { EmojiPicker } from "./EmojiPicker";
+import { EmojiPickerApp } from "./EmojiPicker";
 import { Input } from "./Input";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendMessage } from "@/features";
 import { ClipLoader } from "react-spinners";
@@ -15,6 +15,7 @@ export const ChatActions = () => {
   );
   const { user } = useSelector((state: any) => state.user);
   const [message, setMessage] = useState("");
+  const textRef = useRef();
   const values = {
     message,
     convo_id: activeConversation._id,
@@ -35,11 +36,11 @@ export const ChatActions = () => {
       <div className="w-full flex items-center gap-x-2 ">
         {/* Emojis and attachments */}
         <ul className="flex gap-x-2">
-          <EmojiPicker />
+          <EmojiPickerApp message={message} setMessage={setMessage} textRef={textRef} />
           <Attachments />
         </ul>
         {/* Input */}
-        <Input message={message} setMessage={setMessage} />
+        <Input message={message} setMessage={setMessage} textRef={textRef} />
         {/* Send Button */}
         <button type="submit" className="btn">
           {status === "loading" ? (

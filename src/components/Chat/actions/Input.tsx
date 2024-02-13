@@ -3,9 +3,11 @@
 export const Input = ({
   message,
   setMessage,
+  textRef,
 }: {
   message: string;
   setMessage: any;
+  textRef: any;
 }) => {
   const onChangeHandler = (e: any) => {
     setMessage(e.target.value);
@@ -18,6 +20,7 @@ export const Input = ({
         placeholder="Type a message"
         value={message}
         onChange={onChangeHandler}
+        ref={textRef}
       />
     </div>
   );
