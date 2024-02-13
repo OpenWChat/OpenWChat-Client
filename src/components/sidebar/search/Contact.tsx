@@ -2,15 +2,22 @@ import { open_create_conversation } from "@/features";
 import { useDispatch, useSelector } from "react-redux";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const Contact = ({ contact }: { contact: any }) => {
+export const Contact = ({
+  contact,
+  setSearchResults,
+}: {
+  contact: any;
+  setSearchResults: any;
+}) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: any) => state.user);
   const values = {
     receiver_id: contact._id,
     token: user.token,
   };
-  const openConversation = () => {
-    dispatch(open_create_conversation(values));
+  const openConversation = async () => {
+    await dispatch(open_create_conversation(values));
+    setSearchResults([]);
   };
   return (
     <li
