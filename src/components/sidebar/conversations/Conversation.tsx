@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 export const Conversation = ({ convo }: { convo: any }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: any) => state.user);
+  const { activeConversation } = useSelector((state: any) => state.chat);
   const values = {
     receiver_id: getConversationId(user, convo.users),
     token: user.token,
@@ -16,7 +17,11 @@ export const Conversation = ({ convo }: { convo: any }) => {
   return (
     <li
       onClick={() => openConversation()}
-      className="list-none h-[72px] w-full dark:bg-dark_bg_1 hover:dark:bg-dark_bg_2 cursor-pointer dark:text-dark_text_1 px-[10px]"
+      className={`list-none h-[72px] w-full dark:bg-dark_bg_1 hover:${
+        convo._id === activeConversation._id ? "" : "dark:bg-dark_bg_2"
+      } cursor-pointer dark:text-dark_text_1 px-[10px] ${
+        convo._id === activeConversation._id ? "dark:bg-dark_hover_1" : ""
+      }`}
     >
       <div className="relative w-full flex items-center justify-between py-[10px]">
         {/* left side */}
