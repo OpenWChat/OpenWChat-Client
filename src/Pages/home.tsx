@@ -7,12 +7,14 @@ import { getConversations } from "@/features";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const Home = () => {
+const Home = ({ socket }: any) => {
   const dispatch: any = useDispatch();
   const { user } = useSelector((state: any) => state.user);
   const { activeConversation } = useSelector((state: any) => state.chat);
-  console.log(activeConversation);
-
+  // join user into socket io
+  useEffect(() => {
+    socket.emit("join", user._id);
+  }, [user]);
   // get conversation
   useEffect(() => {
     if (user?.token) {

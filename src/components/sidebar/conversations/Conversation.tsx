@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import SocketContext from "@/context/SocketContext";
 import { open_create_conversation } from "@/features";
 import { capitalize, dateHandler, getConversationId } from "@/utils";
 import { useDispatch, useSelector } from "react-redux";
 
-export const Conversation = ({ convo }: { convo: any }) => {
+const Conversation = ({ convo, socket }: { convo: any; socket: any }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: any) => state.user);
   const { activeConversation } = useSelector((state: any) => state.chat);
@@ -11,12 +12,15 @@ export const Conversation = ({ convo }: { convo: any }) => {
     receiver_id: getConversationId(user, convo.users),
     token: user.token,
   };
-  const openConversation = () => {
-    dispatch(open_create_conversation(values));
+  const openConversation = async () => {
+    const newConvo = await dispatch(open_create_conversation(values));
+    console.log(newConvo);
+
+    socket.emit("join conversation", newConvo.payload._id);
   };
   return (
     <li
-      onClick={() => openConversation()} 
+      onClick={() => openConversation()}
       className={`list-none h-[72px] w-full dark:bg-dark_bg_1 hover:${
         convo._id === activeConversation._id ? "" : "dark:bg-dark_bg_2"
       } cursor-pointer dark:text-dark_text_1 px-[10px] ${
@@ -67,3 +71,10 @@ export const Conversation = ({ convo }: { convo: any }) => {
     </li>
   );
 };
+
+const ConversationWithContext = (props: any) => (
+  <SocketContext.Consumer>
+    {(socket) => <Conversation {...props} socket={socket} />}
+  </SocketContext.Consumer>
+);
+export default ConversationWithContext;

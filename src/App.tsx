@@ -9,7 +9,6 @@ const socket = io(SOCKET_ENDPOINT);
 const App = () => {
   const { user } = useSelector((state: any) => state.user);
   const { token } = user;
-
   return (
     <div className="dark">
       <SocketContext.Provider value={socket}>

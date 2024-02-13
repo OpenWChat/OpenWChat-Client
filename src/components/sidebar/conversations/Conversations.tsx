@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useSelector } from "react-redux";
-import { Conversation } from "./Conversation";
+import Conversation from "./Conversation";
 
 export const Conversations = () => {
   const { conversations, activeConversation } = useSelector(
