@@ -18,6 +18,7 @@ export const ChatActions = () => {
   );
   const { user } = useSelector((state: any) => state.user);
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const textRef = useRef();
   const values = {
     message,
@@ -27,8 +28,10 @@ export const ChatActions = () => {
   };
   const sendMessageHandler = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
     await dispatch(sendMessage(values));
     setMessage("");
+    setLoading(false);
   };
   return (
     <form
@@ -57,7 +60,7 @@ export const ChatActions = () => {
         <Input message={message} setMessage={setMessage} textRef={textRef} />
         {/* Send Button */}
         <button type="submit" className="btn">
-          {status === "loading" ? (
+          {status === "loading" && loading ? (
             <ClipLoader color="#E9EDEF" size={25} />
           ) : (
             <SendIcon className="dark:fill-dark_svg_1" />
