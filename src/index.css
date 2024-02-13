@@ -194,7 +194,9 @@
   .css-10wo9uf-option span {
     color: #fff !important;
   }
-  
+  .epr_-kg0voo{
+    display: none !important;
+  }
   .createGroupAnimation {
     animation: cga 0.5s;
   }

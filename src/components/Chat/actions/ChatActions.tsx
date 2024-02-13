@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { SendIcon } from "@/svg";
-import { Attachments } from "./Attachments";
+import { Attachments } from "./attachments";
 import { EmojiPickerApp } from "./EmojiPicker";
 import { Input } from "./Input";
 import { useRef, useState } from "react";
@@ -10,6 +10,9 @@ import { ClipLoader } from "react-spinners";
 
 export const ChatActions = () => {
   const dispatch = useDispatch();
+  const [showPicker, setShowPicker] = useState(false);
+  const [showAttachments, setShowAttachments] = useState(false);
+
   const { activeConversation, status } = useSelector(
     (state: any) => state.chat
   );
@@ -36,8 +39,19 @@ export const ChatActions = () => {
       <div className="w-full flex items-center gap-x-2 ">
         {/* Emojis and attachments */}
         <ul className="flex gap-x-2">
-          <EmojiPickerApp message={message} setMessage={setMessage} textRef={textRef} />
-          <Attachments />
+          <EmojiPickerApp
+            message={message}
+            setMessage={setMessage}
+            textRef={textRef}
+            showPicker={showPicker}
+            setShowPicker={setShowPicker}
+            setShowAttachments={setShowAttachments}
+          />
+          <Attachments
+            setShowPicker={setShowPicker}
+            showAttachments={showAttachments}
+            setShowAttachments={setShowAttachments}
+          />
         </ul>
         {/* Input */}
         <Input message={message} setMessage={setMessage} textRef={textRef} />

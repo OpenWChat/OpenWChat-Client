@@ -8,12 +8,17 @@ export const EmojiPickerApp = ({
   textRef,
   message,
   setMessage,
+  showPicker,
+  setShowPicker,
+  setShowAttachments,
 }: {
   textRef: any;
   message: any;
   setMessage: any;
+  showPicker: any;
+  setShowPicker: any;
+  setShowAttachments: any;
 }) => {
-  const [showPicker, setShowPicker] = useState(false);
   const [cursorPosition, setCursorPosition] = useState();
   useEffect(() => {
     textRef.current.selectionEnd = cursorPosition;
@@ -31,7 +36,10 @@ export const EmojiPickerApp = ({
   return (
     <li className="w-full">
       <button
-        onClick={() => setShowPicker((prev) => !prev)}
+        onClick={() => {
+          setShowAttachments(false);
+          setShowPicker((prev: any) => !prev);
+        }}
         className="btn"
         type="button"
       >
