@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChatContainer, Sidebar } from "@/components";
 import { WhatsAppHome } from "@/components";
+import SocketContext from "@/context/SocketContext";
 import { getConversations } from "@/features";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,4 +31,9 @@ const Home = () => {
   );
 };
 
-export default Home;
+const HomeWhitSocket = (props: any) => (
+  <SocketContext.Consumer>
+    {(socket) => <Home {...props} socket={socket} />}
+  </SocketContext.Consumer>
+);
+export default HomeWhitSocket;
