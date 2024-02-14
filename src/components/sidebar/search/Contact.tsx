@@ -1,13 +1,16 @@
+import SocketContext from "@/context/SocketContext";
 import { open_create_conversation } from "@/features";
 import { useDispatch, useSelector } from "react-redux";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const Contact = ({
+const ContactWithoutSocket = ({
   contact,
   setSearchResults,
+  socket,
 }: {
   contact: any;
   setSearchResults: any;
+  socket: any;
 }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: any) => state.user);
@@ -16,9 +19,11 @@ export const Contact = ({
     token: user.token,
   };
   const openConversation = async () => {
-    await dispatch(open_create_conversation(values));
+    const newConvo = await dispatch(open_create_conversation(values));
+    socket.emit("join conversation", newConvo.payload._id);
     setSearchResults([]);
   };
+
   return (
     <li
       onClick={() => openConversation()}
@@ -58,3 +63,10 @@ export const Contact = ({
     </li>
   );
 };
+
+const ContactWithContext = (props: any) => (
+  <SocketContext.Consumer>
+    {(socket) => <ContactWithoutSocket {...props} socket={socket} />}
+  </SocketContext.Consumer>
+);
+export const Contact = ContactWithContext;

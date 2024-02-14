@@ -1,10 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import SocketContext from "@/context/SocketContext";
 import { open_create_conversation } from "@/features";
-import { capitalize, dateHandler, getConversationId } from "@/utils";
+import {
+  capitalize,
+  dateHandler,
+  getConversationId,
+  getConversationName,
+  getConversationPicture,
+} from "@/utils";
 import { useDispatch, useSelector } from "react-redux";
 
-const Conversation = ({ convo, socket }: { convo: any; socket: any }) => {
+const ConversationwithoutSocket = ({
+  convo,
+  socket,
+}: {
+  convo: any;
+  socket: any;
+}) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: any) => state.user);
   const { activeConversation } = useSelector((state: any) => state.chat);
@@ -14,8 +26,6 @@ const Conversation = ({ convo, socket }: { convo: any; socket: any }) => {
   };
   const openConversation = async () => {
     const newConvo = await dispatch(open_create_conversation(values));
-    console.log(newConvo);
-
     socket.emit("join conversation", newConvo.payload._id);
   };
   return (
@@ -33,8 +43,8 @@ const Conversation = ({ convo, socket }: { convo: any; socket: any }) => {
           {/* conversation user picture */}
           <div className="relative min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden">
             <img
-              src={convo.picture}
-              alt={convo.name}
+              src={getConversationPicture(user, convo.users)}
+              alt={getConversationName(user, convo.users)}
               className="w-full h-full object-cover"
             />
           </div>
@@ -42,7 +52,7 @@ const Conversation = ({ convo, socket }: { convo: any; socket: any }) => {
           <div className="w-full flex flex-col">
             {/* conversation name */}
             <h1 className="font-bold flex items-center gap-x-2">
-              {capitalize(convo.name)}
+              {capitalize(getConversationName(user, convo.users))}
             </h1>
             {/* conversation message */}
             <div>
@@ -74,7 +84,7 @@ const Conversation = ({ convo, socket }: { convo: any; socket: any }) => {
 
 const ConversationWithContext = (props: any) => (
   <SocketContext.Consumer>
-    {(socket) => <Conversation {...props} socket={socket} />}
+    {(socket) => <ConversationwithoutSocket {...props} socket={socket} />}
   </SocketContext.Consumer>
 );
-export default ConversationWithContext;
+export const Conversation = ConversationWithContext;

@@ -7,8 +7,9 @@ import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendMessage } from "@/features";
 import { ClipLoader } from "react-spinners";
+import SocketContext from "@/context/SocketContext";
 
-export const ChatActions = () => {
+export const ChatActionswithoutSocket = ({ socket }: { socket: any }) => {
   const dispatch = useDispatch();
   const [showPicker, setShowPicker] = useState(false);
   const [showAttachments, setShowAttachments] = useState(false);
@@ -29,7 +30,8 @@ export const ChatActions = () => {
   const sendMessageHandler = async (e: any) => {
     e.preventDefault();
     setLoading(true);
-    await dispatch(sendMessage(values));
+    const newMsg = await dispatch(sendMessage(values));
+    socket.emit("send message", newMsg.payload);
     setMessage("");
     setLoading(false);
   };
@@ -70,3 +72,10 @@ export const ChatActions = () => {
     </form>
   );
 };
+
+const ChatActionsWithContext = (props: any) => (
+  <SocketContext.Consumer>
+    {(socket) => <ChatActionswithoutSocket {...props} socket={socket} />}
+  </SocketContext.Consumer>
+);
+export const ChatActions = ChatActionsWithContext;
