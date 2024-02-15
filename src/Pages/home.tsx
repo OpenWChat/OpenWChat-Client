@@ -4,16 +4,21 @@ import { ChatContainer, Sidebar } from "@/components";
 import { WhatsAppHome } from "@/components";
 import SocketContext from "@/context/SocketContext";
 import { getConversations, updateMessagesAndConversations } from "@/features";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const Home = ({ socket }: any) => {
   const dispatch: any = useDispatch();
   const { user } = useSelector((state: any) => state.user);
   const { activeConversation } = useSelector((state: any) => state.chat);
+  const [onlineUsers,setOnlineUsers]=useState([])
   // join user into socket io
   useEffect(() => {
     socket.emit("join", user._id);
+    // get online users
+    socket.on("get-online-users", (users:any) => {
+      setOnlineUsers(users)
+    });
   }, [user]);
   // get conversation
   useEffect(() => {
@@ -34,8 +39,8 @@ const Home = ({ socket }: any) => {
       {/* Container */}
       <div className="container h-screen flex py-[19px]">
         {/* Sidebar */}
-        <Sidebar />
-        {activeConversation._id ? <ChatContainer /> : <WhatsAppHome />}
+        <Sidebar onlineUsers={onlineUsers}/>
+        {activeConversation._id ? <ChatContainer onlineUsers={onlineUsers}/> : <WhatsAppHome />}
       </div>
     </div>
   );

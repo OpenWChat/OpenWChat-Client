@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { SideBarHeader } from "./header";
 import { Notifications } from "./notifications";
 import { Search, SearchResults } from "./search";
 import { Conversations } from "./conversations";
 
-export const Sidebar = () => {
+export const Sidebar = ({ onlineUsers }: { onlineUsers: any }) => {
   const [searchResults, setSearchResults] = useState([]);
 
   return (
@@ -29,7 +30,7 @@ export const Sidebar = () => {
       ) : (
         <>
           {/* Conversations */}
-          <Conversations />
+          <Conversations onlineUsers={onlineUsers} />
         </>
       )}
     </div>

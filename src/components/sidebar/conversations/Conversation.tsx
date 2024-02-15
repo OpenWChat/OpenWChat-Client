@@ -13,9 +13,11 @@ import { useDispatch, useSelector } from "react-redux";
 const ConversationwithoutSocket = ({
   convo,
   socket,
+  online,
 }: {
   convo: any;
   socket: any;
+  online: boolean;
 }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: any) => state.user);
@@ -28,6 +30,7 @@ const ConversationwithoutSocket = ({
     const newConvo = await dispatch(open_create_conversation(values));
     socket.emit("join conversation", newConvo.payload._id);
   };
+
   return (
     <li
       onClick={() => openConversation()}
@@ -41,7 +44,11 @@ const ConversationwithoutSocket = ({
         {/* left side */}
         <div className="flex items-center gap-x-3">
           {/* conversation user picture */}
-          <div className="relative min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden">
+          <div
+            className={`relative min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden ${
+              online ? "online" : ""
+            }`}
+          >
             <img
               src={getConversationPicture(user, convo.users)}
               alt={getConversationName(user, convo.users)}
