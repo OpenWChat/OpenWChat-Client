@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export const Input = ({
+import SocketContext from "@/context/SocketContext";
+import { useState } from "react";
+
+export const InputWithouttSocket = ({
   message,
   setMessage,
   textRef,
@@ -9,6 +12,7 @@ export const Input = ({
   setMessage: any;
   textRef: any;
 }) => {
+  const [typing, setTyping] = useState(false);
   const onChangeHandler = (e: any) => {
     setMessage(e.target.value);
   };
@@ -25,3 +29,10 @@ export const Input = ({
     </div>
   );
 };
+
+const InputWithtSocket = (props: any) => (
+  <SocketContext.Consumer>
+    {(socket) => <InputWithouttSocket {...props} socket={socket} />}
+  </SocketContext.Consumer>
+);
+export const Input = InputWithtSocket;
