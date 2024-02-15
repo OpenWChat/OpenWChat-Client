@@ -8,7 +8,13 @@ import { getConversationMessages } from "@/features";
 import { ChatActions } from "./actions";
 import { checkOnlineStatus } from "@/utils";
 
-export const ChatContainer = ({ onlineUsers }: { onlineUsers: any }) => {
+export const ChatContainer = ({
+  onlineUsers,
+  typing,
+}: {
+  onlineUsers: any;
+  typing: boolean;
+}) => {
   const dispatch = useDispatch();
   const { activeConversation } = useSelector((state: any) => state.chat);
   const { user } = useSelector((state: any) => state.user);
@@ -35,7 +41,7 @@ export const ChatContainer = ({ onlineUsers }: { onlineUsers: any }) => {
           )}
         />
         {/* Chat Messages */}
-        <ChatMessages />
+        <ChatMessages typing={typing}/>
         {/* Chat Action */}
         <ChatActions />
       </div>

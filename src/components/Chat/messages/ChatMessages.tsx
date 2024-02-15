@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Message } from "./Message";
 import { useEffect, useRef } from "react";
 
-export const ChatMessages = () => {
+export const ChatMessages = ({ typing }: { typing: boolean }) => {
   const { messages } = useSelector((state: any) => state.chat);
   const { user } = useSelector((state: any) => state.user);
   const endRef: any = useRef();

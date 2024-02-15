@@ -11,13 +11,14 @@ const Home = ({ socket }: any) => {
   const dispatch: any = useDispatch();
   const { user } = useSelector((state: any) => state.user);
   const { activeConversation } = useSelector((state: any) => state.chat);
-  const [onlineUsers,setOnlineUsers]=useState([])
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const [typing, setTyping] = useState(false);
   // join user into socket io
   useEffect(() => {
     socket.emit("join", user._id);
     // get online users
-    socket.on("get-online-users", (users:any) => {
-      setOnlineUsers(users)
+    socket.on("get-online-users", (users: any) => {
+      setOnlineUsers(users);
     });
   }, [user]);
   // get conversation
@@ -27,11 +28,14 @@ const Home = ({ socket }: any) => {
     }
   }, [user]);
 
-  // listening to recieved message
   useEffect(() => {
+    // listening to recieved message
     socket.on("message received", (message: any) => {
       dispatch(updateMessagesAndConversations(message));
     });
+    // listening when user is typing
+    socket.on("typing", () => setTyping(true));
+    socket.on("stop typing", () => setTyping(false));
   }, []);
 
   return (
@@ -39,8 +43,12 @@ const Home = ({ socket }: any) => {
       {/* Container */}
       <div className="container h-screen flex py-[19px]">
         {/* Sidebar */}
-        <Sidebar onlineUsers={onlineUsers}/>
-        {activeConversation._id ? <ChatContainer onlineUsers={onlineUsers}/> : <WhatsAppHome />}
+        <Sidebar onlineUsers={onlineUsers} />
+        {activeConversation._id ? (
+          <ChatContainer onlineUsers={onlineUsers} typing={typing} />
+        ) : (
+          <WhatsAppHome />
+        )}
       </div>
     </div>
   );
