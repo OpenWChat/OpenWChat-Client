@@ -34,7 +34,7 @@ const Home = ({ socket }: any) => {
       dispatch(updateMessagesAndConversations(message));
     });
     // listening when user is typing
-    socket.on("typing", () => setTyping(true));
+    socket.on("typing", (conversationId: any) => setTyping(conversationId));
     socket.on("stop typing", () => setTyping(false));
   }, []);
 
@@ -43,7 +43,7 @@ const Home = ({ socket }: any) => {
       {/* Container */}
       <div className="container h-screen flex py-[19px]">
         {/* Sidebar */}
-        <Sidebar onlineUsers={onlineUsers} />
+        <Sidebar onlineUsers={onlineUsers} typing={typing}/>
         {activeConversation._id ? (
           <ChatContainer onlineUsers={onlineUsers} typing={typing} />
         ) : (

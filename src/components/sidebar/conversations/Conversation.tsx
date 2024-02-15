@@ -14,10 +14,12 @@ const ConversationwithoutSocket = ({
   convo,
   socket,
   online,
+  typing,
 }: {
   convo: any;
   socket: any;
   online: boolean;
+  typing: any;
 }) => {
   const dispatch = useDispatch();
   const { user } = useSelector((state: any) => state.user);
@@ -65,11 +67,15 @@ const ConversationwithoutSocket = ({
             <div>
               <div className="flex items-center gap-x-1 dark:text-dark_text_2">
                 <div className="flex-1 items-center gap-x-1 dark:text-dark_text_2">
-                  <p>
-                    {convo?.latestMessage?.message.length > 26
-                      ? `${convo?.latestMessage?.message.substring(0, 26)}...`
-                      : convo?.latestMessage?.message}
-                  </p>
+                  {typing === convo._id ? (
+                    <p className="text-green_1">Typing...</p>
+                  ) : (
+                    <p>
+                      {convo?.latestMessage?.message.length > 26
+                        ? `${convo?.latestMessage?.message.substring(0, 26)}...`
+                        : convo?.latestMessage?.message}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

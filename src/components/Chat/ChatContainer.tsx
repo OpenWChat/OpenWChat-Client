@@ -13,7 +13,7 @@ export const ChatContainer = ({
   typing,
 }: {
   onlineUsers: any;
-  typing: boolean;
+  typing: any;
 }) => {
   const dispatch = useDispatch();
   const { activeConversation } = useSelector((state: any) => state.chat);
