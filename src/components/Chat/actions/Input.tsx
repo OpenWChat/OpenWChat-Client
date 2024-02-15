@@ -2,19 +2,38 @@
 
 import SocketContext from "@/context/SocketContext";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export const InputWithouttSocket = ({
   message,
   setMessage,
   textRef,
+  socket,
 }: {
   message: string;
   setMessage: any;
   textRef: any;
+  socket: any;
 }) => {
+  const { activeConversation } = useSelector((state: any) => state.chat);
+
   const [typing, setTyping] = useState(false);
   const onChangeHandler = (e: any) => {
     setMessage(e.target.value);
+    if (!typing) {
+      setTyping(true);
+      socket.emit("typing", activeConversation._id);
+    }
+    const lastTypingTime = new Date().getTime();
+    const timer = 1000;
+    setTimeout(() => {
+      const timeNow = new Date().getTime();
+      const timeDiff = timeNow - lastTypingTime;
+      if (timeDiff >= timer && typing) {
+        socket.emit("stop typing", activeConversation._id);
+        setTyping(false);
+      }
+    }, timer);
   };
   return (
     <div className="w-full">
