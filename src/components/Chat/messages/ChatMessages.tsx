@@ -2,6 +2,7 @@
 import { useSelector } from "react-redux";
 import { Message } from "./Message";
 import { useEffect, useRef } from "react";
+import { Typing } from "./Typing";
 
 export const ChatMessages = ({ typing }: { typing: boolean }) => {
   const { messages } = useSelector((state: any) => state.chat);
@@ -26,6 +27,7 @@ export const ChatMessages = ({ typing }: { typing: boolean }) => {
               me={user._id === message.sender._id}
             />
           ))}
+        {typing ? <Typing /> : null}
         <div className="mt-2" ref={endRef}></div>
       </div>
     </div>
