@@ -1,7 +1,13 @@
 import { Contact } from "./Contact";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export const SearchResults = ({ searchResults }: { searchResults: any }) => {
+export const SearchResults = ({
+  searchResults,
+  setSearchResults,
+}: {
+  searchResults: any;
+  setSearchResults: any;
+}) => {
   return (
     <div className="w-full convos scrollbar">
       <div>
@@ -13,8 +19,8 @@ export const SearchResults = ({ searchResults }: { searchResults: any }) => {
         {/* Results */}
         <ul>
           {searchResults &&
-            searchResults.map((user:any) => (
-              <Contact contact={user} key={user._id} />
+            searchResults.map((user: any) => (
+              <Contact contact={user} key={user._id} setSearchResults={setSearchResults}/>
             ))}
         </ul>
       </div>
