@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { SideBarHeader } from "./header";
 import { Notifications } from "./notifications";
 import { Search, SearchResults } from "./search";
 import { Conversations } from "./conversations";
 
-export const Sidebar = () => {
+export const Sidebar = ({ onlineUsers }: { onlineUsers: any }) => {
   const [searchResults, setSearchResults] = useState([]);
 
   return (
-    <div className="w-[40%] h-full select-none">
+    <div className="flex0030 max-w-[30%] h-full select-none">
       {/* Sidebar Header */}
       <SideBarHeader />
       {/* Notifications */}
@@ -21,12 +22,15 @@ export const Sidebar = () => {
       {searchResults.length > 0 ? (
         <>
           {/* Search Results */}
-          <SearchResults searchResults={searchResults}/>
+          <SearchResults
+            searchResults={searchResults}
+            setSearchResults={setSearchResults}
+          />
         </>
       ) : (
         <>
           {/* Conversations */}
-          <Conversations />
+          <Conversations onlineUsers={onlineUsers} />
         </>
       )}
     </div>
