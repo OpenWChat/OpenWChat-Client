@@ -17,10 +17,16 @@ export const DocumentAttachments = () => {
         file.type !== "application/msword" &&
         file.type !==
           "application/vnd.openxmlformats-officedocument.wordprocessingml.document" &&
-        file.type !== "image/jfif" &&
-        file.type !== "video/mp4" &&
-        file.type !== "video/mpeg" &&
-        file.type !== "video/webm"
+        file.type !== "application/vnd.ms-powerpoint" &&
+        file.type !==
+          "application/vnd.openxmlformats-officedocument.presentationml.presentation" &&
+        file.type !== "application/vnd.ms-excel" &&
+        file.type !==
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" &&
+        file.type !== "application/vnd.rar" &&
+        file.type !== "application/zip" &&
+        file.type !== "audio/mpeg" &&
+        file.type !== "audio/wav"
       ) {
         files = files.filter((item: any) => item.name !== file.name);
         return;
@@ -54,7 +60,7 @@ export const DocumentAttachments = () => {
         type="file"
         hidden
         ref={inputRef}
-        accept="image/png,image/jpeg,image/gif,image/webp,video/mp4,video/mpeg,video/webm"
+        accept="application/*,text/plain"
         onChange={documentHandler}
       />
     </li>
