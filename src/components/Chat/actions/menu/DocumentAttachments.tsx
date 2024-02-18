@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { addFiles } from "@/features";
 import { DocumentIcon } from "@/svg";
+import { getFileType } from "@/utils";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 
@@ -40,7 +41,7 @@ export const DocumentAttachments = () => {
           dispatch(
             addFiles({
               file: file,
-              type: file.type.split("/")[1],
+              type: getFileType(file.type),
             })
           );
         };
@@ -59,6 +60,7 @@ export const DocumentAttachments = () => {
       <input
         type="file"
         hidden
+        multiple
         ref={inputRef}
         accept="application/*,text/plain"
         onChange={documentHandler}

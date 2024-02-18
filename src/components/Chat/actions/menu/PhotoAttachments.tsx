@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { addFiles } from "@/features";
 import { PhotoIcon } from "@/svg";
+import { getFileType } from "@/utils";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 
@@ -34,7 +35,7 @@ export const PhotoAttachments = () => {
             addFiles({
               file: file,
               imageData: e.target?.result,
-              type: file.type.split("/")[0],
+              type: getFileType(file.type),
             })
           );
         };
@@ -53,6 +54,7 @@ export const PhotoAttachments = () => {
       <input
         type="file"
         hidden
+        multiple
         ref={inputRef}
         accept="image/png,image/jpeg,image/gif,image/webp,video/mp4,video/mpeg,video/webm"
         onChange={imageHandler}
