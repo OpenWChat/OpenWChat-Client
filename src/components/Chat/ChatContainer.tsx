@@ -16,7 +16,7 @@ export const ChatContainer = ({
   typing: any;
 }) => {
   const dispatch = useDispatch();
-  const { activeConversation } = useSelector((state: any) => state.chat);
+  const { activeConversation, files } = useSelector((state: any) => state.chat);
   const { user } = useSelector((state: any) => state.user);
   const values = {
     token: user.token,
@@ -40,10 +40,16 @@ export const ChatContainer = ({
             activeConversation.users
           )}
         />
-        {/* Chat Messages */}
-        <ChatMessages typing={typing}/>
-        {/* Chat Action */}
-        <ChatActions />
+        {files.length > 0 ? (
+          "files"
+        ) : (
+          <>
+            {/* Chat Messages */}
+            <ChatMessages typing={typing} />
+            {/* Chat Action */}
+            <ChatActions />
+          </>
+        )}
       </div>
     </div>
   );
