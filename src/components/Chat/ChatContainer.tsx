@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { getConversationMessages } from "@/features";
 import { ChatActions } from "./actions";
 import { checkOnlineStatus } from "@/utils";
+import { FilePreview } from "./preview";
 
 export const ChatContainer = ({
   onlineUsers,
@@ -41,7 +42,7 @@ export const ChatContainer = ({
           )}
         />
         {files.length > 0 ? (
-          "files"
+          <FilePreview/>
         ) : (
           <>
             {/* Chat Messages */}
