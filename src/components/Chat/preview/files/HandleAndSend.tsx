@@ -1,23 +1,47 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Add } from "./Add";
 import { SendIcon } from "@/svg";
 import { uploadFiles } from "@/utils";
+import { useState } from "react";
+import { sendMessage } from "@/features";
+import SocketContext from "@/context/SocketContext";
 
-export const HandleAndSend = ({
+export const HandleAndSendWithoutSocket = ({
   activeIndex,
   setActiveIndex,
   message,
+  socket,
 }: {
   activeIndex: number;
   setActiveIndex: any;
   message: string;
+  socket: any;
 }) => {
-  const { files } = useSelector((state: any) => state.chat);
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const { files, activeConversation } = useSelector((state: any) => state.chat);
+  const { user } = useSelector((state: any) => state.user);
+  const { token } = user;
   const sendMessageHandler = async (e: any) => {
     e.preventDefault();
+    setLoading(true);
     // upload files
     const uploaded_files = await uploadFiles(files);
+    // send the message
+    console.log(uploaded_files);
+
+    const values = {
+      token,
+      message,
+      convo_id: activeConversation._id,
+      files: uploaded_files.length > 0 ? uploaded_files : [],
+    };
+    console.log(values);
+
+    const newMsg = await dispatch(sendMessage(values));
+    socket.emit("send message", newMsg.payload);
+    setLoading(false);
   };
   return (
     <div className="w-[97%] flex items-center justify-between mt-2 pt-2 border-t dark:border-dark_border_2">
@@ -61,3 +85,10 @@ export const HandleAndSend = ({
     </div>
   );
 };
+
+const HandleAndSendWithtSocket = (props: any) => (
+  <SocketContext.Consumer>
+    {(socket) => <HandleAndSendWithoutSocket {...props} socket={socket} />}
+  </SocketContext.Consumer>
+);
+export const HandleAndSend = HandleAndSendWithtSocket;
