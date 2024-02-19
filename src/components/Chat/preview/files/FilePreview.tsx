@@ -13,14 +13,17 @@ export const FilePreview = () => {
       {/* Container */}
       <div className="flex w-full flex-col items-center">
         {/* Header */}
-        <Header activeIndex={activeIndex}/>
+        <Header activeIndex={activeIndex} />
         {/* Viewing Selected Files */}
-        <FileViewer />
+        <FileViewer activeIndex={activeIndex} />
         <div className="flex w-full flex-col items-center">
           {/* Message input */}
           <Input message={message} setMessage={setMessage} />
           {/* Send and manipulate files */}
-          <HandleAndSend />
+          <HandleAndSend
+            activeIndex={activeIndex}
+            setActiveIndex={setActiveIndex}
+          />
         </div>
       </div>
     </div>
