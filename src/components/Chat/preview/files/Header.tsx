@@ -3,7 +3,7 @@ import { clearFiles } from "@/features";
 import { CloseIcon } from "@/svg";
 import { useDispatch, useSelector } from "react-redux";
 
-export const Header = () => {
+export const Header = ({activeIndex}:{activeIndex:number}) => {
   const dispatch = useDispatch();
   const { files } = useSelector((state: any) => state.chat);
   const clearFileHandler = () => {
@@ -19,7 +19,7 @@ export const Header = () => {
         </div>
         {/* File Name */}
         <h1 className="dark:text-dark_text_1 text-[15px]">
-          {files[0]?.file?.name}
+          {files[activeIndex]?.file?.name}
         </h1>
         {/* Empty Tag */}
         <span></span>
