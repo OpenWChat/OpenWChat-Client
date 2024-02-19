@@ -4,8 +4,9 @@ import { Add } from "./Add";
 import { SendIcon } from "@/svg";
 import { uploadFiles } from "@/utils";
 import { useState } from "react";
-import { sendMessage } from "@/features";
+import { clearFiles, sendMessage } from "@/features";
 import SocketContext from "@/context/SocketContext";
+import { ClipLoader } from "react-spinners";
 
 export const HandleAndSendWithoutSocket = ({
   activeIndex,
@@ -29,19 +30,17 @@ export const HandleAndSendWithoutSocket = ({
     // upload files
     const uploaded_files = await uploadFiles(files);
     // send the message
-    console.log(uploaded_files);
-
     const values = {
       token,
       message,
       convo_id: activeConversation._id,
       files: uploaded_files.length > 0 ? uploaded_files : [],
     };
-    console.log(values);
 
     const newMsg = await dispatch(sendMessage(values));
     socket.emit("send message", newMsg.payload);
     setLoading(false);
+    dispatch(clearFiles());
   };
   return (
     <div className="w-[97%] flex items-center justify-between mt-2 pt-2 border-t dark:border-dark_border_2">
@@ -80,7 +79,11 @@ export const HandleAndSendWithoutSocket = ({
         className="bg-green_1 w-16 h-16 mt-2 rounded-full flex items-center justify-center cursor-pointer"
         onClick={(e) => sendMessageHandler(e)}
       >
-        <SendIcon className="fill-white" />
+        {loading ? (
+          <ClipLoader color="#E9EDEF" size={25} />
+        ) : (
+          <SendIcon className="fill-white" />
+        )}
       </div>
     </div>
   );
