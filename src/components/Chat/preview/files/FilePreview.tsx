@@ -23,6 +23,7 @@ export const FilePreview = () => {
           <HandleAndSend
             activeIndex={activeIndex}
             setActiveIndex={setActiveIndex}
+            message={message}
           />
         </div>
       </div>

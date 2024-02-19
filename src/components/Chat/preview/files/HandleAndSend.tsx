@@ -2,15 +2,23 @@
 import { useSelector } from "react-redux";
 import { Add } from "./Add";
 import { SendIcon } from "@/svg";
+import { uploadFiles } from "@/utils";
 
 export const HandleAndSend = ({
   activeIndex,
   setActiveIndex,
+  message,
 }: {
   activeIndex: number;
   setActiveIndex: any;
+  message: string;
 }) => {
   const { files } = useSelector((state: any) => state.chat);
+  const sendMessageHandler = async (e: any) => {
+    e.preventDefault();
+    // upload files
+    const uploaded_files = await uploadFiles(files);
+  };
   return (
     <div className="w-[97%] flex items-center justify-between mt-2 pt-2 border-t dark:border-dark_border_2">
       {/* Empty */}
@@ -44,7 +52,10 @@ export const HandleAndSend = ({
         <Add setActiveIndex={setActiveIndex} />
       </div>
       {/* Send Button */}
-      <div className="bg-green_1 w-16 h-16 mt-2 rounded-full flex items-center justify-center cursor-pointer">
+      <div
+        className="bg-green_1 w-16 h-16 mt-2 rounded-full flex items-center justify-center cursor-pointer"
+        onClick={(e) => sendMessageHandler(e)}
+      >
         <SendIcon className="fill-white" />
       </div>
     </div>
