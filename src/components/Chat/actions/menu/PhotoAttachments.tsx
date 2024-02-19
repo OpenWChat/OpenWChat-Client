@@ -34,7 +34,7 @@ export const PhotoAttachments = () => {
           dispatch(
             addFiles({
               file: file,
-              imageData: e.target?.result,
+              fileData: e.target?.result,
               type: getFileType(file.type),
             })
           );
