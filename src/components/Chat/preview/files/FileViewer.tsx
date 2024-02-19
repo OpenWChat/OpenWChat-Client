@@ -7,7 +7,7 @@ export const FileViewer = ({ activeIndex }: { activeIndex: number }) => {
     <div className="w-full max-w-[60%]">
       {/* Container */}
       <div className="flex justify-center items-center my-2">
-        {files[activeIndex].type === "IMAGE" ? (
+        {files[activeIndex]?.type === "IMAGE" ? (
           <img
             src={files[activeIndex]?.fileData}
             alt="image"
