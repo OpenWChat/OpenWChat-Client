@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useDispatch, useSelector } from "react-redux";
 import { Add } from "./Add";
-import { SendIcon } from "@/svg";
+import { CloseIcon, SendIcon } from "@/svg";
 import { uploadFiles } from "@/utils";
 import { useState } from "react";
-import { clearFiles, sendMessage } from "@/features";
+import { clearFiles, removeFileFromFiles, sendMessage } from "@/features";
 import SocketContext from "@/context/SocketContext";
 import { ClipLoader } from "react-spinners";
 
@@ -24,6 +24,7 @@ export const HandleAndSendWithoutSocket = ({
   const { files, activeConversation } = useSelector((state: any) => state.chat);
   const { user } = useSelector((state: any) => state.user);
   const { token } = user;
+  // send message handler
   const sendMessageHandler = async (e: any) => {
     e.preventDefault();
     setLoading(true);
@@ -42,6 +43,9 @@ export const HandleAndSendWithoutSocket = ({
     setLoading(false);
     dispatch(clearFiles());
   };
+  const handleRemoveFile = (index:number) => {
+    dispatch(removeFileFromFiles(index));
+  };
   return (
     <div className="w-[97%] flex items-center justify-between mt-2 pt-2 border-t dark:border-dark_border_2">
       {/* Empty */}
@@ -51,7 +55,7 @@ export const HandleAndSendWithoutSocket = ({
         {files.map((file: any, i: number) => (
           <div
             key={i}
-            className={`w-14 h-14 border dark:border-white rounded-md overflow-hidden cursor-pointer ${
+            className={`fileThumbnail relative w-14 h-14 border dark:border-white rounded-md overflow-hidden cursor-pointer ${
               activeIndex === i ? "border-[3px] !border-green_1" : ""
             }`}
             onClick={() => setActiveIndex(i)}
@@ -69,6 +73,13 @@ export const HandleAndSendWithoutSocket = ({
                 className="w-8 h-10 mt-1.5 ml-2.5"
               />
             )}
+            {/* Remove file icon */}
+            <div
+              className="removeFileIcon hidden"
+              onClick={() => handleRemoveFile(i)}
+            >
+              <CloseIcon className="dark:fill-white absolute top-0 right-0 w-4 h-4" />
+            </div>
           </div>
         ))}
         {/* Add anither file */}

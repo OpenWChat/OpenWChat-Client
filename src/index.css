@@ -45,6 +45,9 @@
     .hview{
       height: calc(100vh - 280px);
     }
+    .fileThumbnail:hover .removeFileIcon{
+      display: block;
+    }
 }
 
 /* Animation */
