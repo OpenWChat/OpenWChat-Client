@@ -1,6 +1,25 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { CloseIcon, ValidIcon } from "@/svg";
+import { useEffect, useState } from "react";
 
-export const Ringing = () => {
+export const Ringing = ({ call, setCall }: any) => {
+  const { callEnded, receivingCall } = call;
+  const [timer, setTimer] = useState(0);
+  let interval: any;
+  const handleTimer = () => {
+    interval = setInterval(() => {
+      setTimer((prev) => prev + 1);
+    }, 1000);
+  };
+  useEffect(() => {
+    if (timer < 30) {
+      handleTimer();
+    } else {
+      setCall({ ...call, receivingCall: false });
+    }
+    return () => clearInterval(interval);
+  }, [timer]);
   return (
     <div className="dark:bg-dark_bg_1 rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-lg z-30">
       {/* Container */}
@@ -33,6 +52,8 @@ export const Ringing = () => {
           </li>
         </ul>
       </div>
+      {/* Ringtone */}
+      <audio src="/audio/ringtone.mp3" autoPlay loop />
     </div>
   );
 };
