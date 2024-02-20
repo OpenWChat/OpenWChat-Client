@@ -67,10 +67,7 @@ export const HandleAndSendWithoutSocket = ({
                 className="w-full h-full object-cover"
               />
             ) : files[activeIndex]?.type === "VIDEO" ? (
-              <video
-                src={files[activeIndex]?.fileData}
-                className="max-w-[80%] object-contain hview"
-              />
+              <video src={files[activeIndex]?.fileData} />
             ) : (
               <img
                 src={`/images/file/${file?.type}.png`}
