@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ChatContainer, Sidebar } from "@/components";
+import { Call, ChatContainer, Sidebar } from "@/components";
 import { WhatsAppHome } from "@/components";
 import SocketContext from "@/context/SocketContext";
 import { getConversations, updateMessagesAndConversations } from "@/features";
@@ -50,6 +50,7 @@ const Home = ({ socket }: any) => {
           <WhatsAppHome />
         )}
       </div>
+      <Call/>
     </div>
   );
 };

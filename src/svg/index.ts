@@ -25,4 +25,7 @@ export * from "./Send";
 export * from "./SmallArrow";
 export * from "./Sticker";
 export * from "./Story";
-export * from './Download'
+export * from "./Download";
+export * from "./Valid";
+export * from "./VideoCall";
+export * from "./VideoDial";
