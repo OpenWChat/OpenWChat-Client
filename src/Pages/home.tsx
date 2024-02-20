@@ -3,11 +3,12 @@
 import { Call, ChatContainer, Sidebar } from "@/components";
 import { WhatsAppHome } from "@/components";
 import SocketContext from "@/context/SocketContext";
+
 import { getConversations, updateMessagesAndConversations } from "@/features";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 const callData = {
-  receivingCall: true,
+  receivingCall: false,
   callEnded: false,
 };
 const Home = ({ socket }: any) => {

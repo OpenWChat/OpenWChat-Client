@@ -53,7 +53,7 @@ export const Ringing = ({ call, setCall }: any) => {
         </ul>
       </div>
       {/* Ringtone */}
-      <audio src="/audio/ringtone.mp3" autoPlay loop />
+      <audio autoPlay src="/audio/ringtone.mp3" loop></audio>
     </div>
   );
 };
