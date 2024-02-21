@@ -67,6 +67,7 @@ const Home = ({ socket }: any) => {
         callAccepted={callAccepted}
         userVideo={userVideo}
         myVideo={myVideo}
+        stream={stream}
       />
     </div>
   );

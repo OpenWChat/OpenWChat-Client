@@ -11,6 +11,7 @@ export const Call = ({
   callAccepted,
   userVideo,
   myVideo,
+  stream,
 }: any) => {
   const { callEnded, receivingCall } = call;
   const [showActions, setShowActions] = useState(false);
@@ -33,9 +34,25 @@ export const Call = ({
         {/* Video streams */}
         <div>
           {/* user video */}
-          <div></div>
+          <div>
+            <video
+              ref={userVideo}
+              playsInline
+              muted
+              autoPlay
+              className={`largeVideoCall`}
+            ></video>
+          </div>
           {/* my video */}
-          <div></div>
+          <div>
+            <video
+              ref={myVideo}
+              playsInline
+              muted
+              autoPlay
+              className={`smallVideoCall ${showActions ? "moveVideoCall" : ""}`}
+            ></video>
+          </div>
         </div>
       </div>
       {/* Ringing */}
