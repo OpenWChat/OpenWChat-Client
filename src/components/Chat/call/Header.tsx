@@ -18,7 +18,7 @@ export const Header = () => {
         </p>
         {/* Add contact to call */}
         <button className="btn">
-          <AddContactIcon className="fill-white"/>
+          <AddContactIcon className="fill-white" />
         </button>
       </div>
     </header>

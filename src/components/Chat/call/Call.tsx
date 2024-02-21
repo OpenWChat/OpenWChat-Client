@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Ringing } from ".";
+import { CallArea } from "./CallArea";
 import { Header } from "./Header";
 
 export const Call = ({ call, setCall, callAccepted }: any) => {
@@ -14,6 +15,8 @@ export const Call = ({ call, setCall, callAccepted }: any) => {
         <div>
           {/* Header */}
           <Header />
+          {/* Call area */}
+          <CallArea name={"scascasc"} /> 
         </div>
       </div>
       {/* Ringing */}
