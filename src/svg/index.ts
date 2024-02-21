@@ -30,3 +30,5 @@ export * from "./Valid";
 export * from "./VideoCall";
 export * from "./VideoDial";
 export * from "./AddConntact";
+export * from "./Speaker";
+export * from "./Dial";

@@ -5,7 +5,7 @@ import { WhatsAppHome } from "@/components";
 import SocketContext from "@/context/SocketContext";
 
 import { getConversations, updateMessagesAndConversations } from "@/features";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 const callData = {
   receivingCall: false,
@@ -17,6 +17,10 @@ const Home = ({ socket }: any) => {
   const { activeConversation } = useSelector((state: any) => state.chat);
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [call, setCall] = useState(callData);
+  const [stream, setStream] = useState();
+  const myVideo = useRef();
+  const userVideo = useRef();
+
   const [callAccepted, setCallAccepted] = useState(false);
   const { callEnded, receivingCall } = call;
   const [typing, setTyping] = useState(false);
@@ -57,7 +61,13 @@ const Home = ({ socket }: any) => {
           <WhatsAppHome />
         )}
       </div>
-      <Call call={call} setCall={setCall} callAccepted={callAccepted} />
+      <Call
+        call={call}
+        setCall={setCall}
+        callAccepted={callAccepted}
+        userVideo={userVideo}
+        myVideo={myVideo}
+      />
     </div>
   );
 };
