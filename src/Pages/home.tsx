@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 const callData = {
   receivingCall: false,
   callEnded: false,
+  socketId: "",
 };
 const Home = ({ socket }: any) => {
   const dispatch: any = useDispatch();
@@ -18,11 +19,11 @@ const Home = ({ socket }: any) => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [call, setCall] = useState(callData);
   const [stream, setStream] = useState();
-  const myVideo = useRef();
-  const userVideo = useRef();
+  const myVideo: any = useRef();
+  const userVideo: any = useRef();
 
   const [callAccepted, setCallAccepted] = useState(false);
-  const { callEnded, receivingCall } = call;
+  const { callEnded, receivingCall, socketId } = call;
   const [typing, setTyping] = useState(false);
   // join user into socket io
   useEffect(() => {
@@ -38,6 +39,25 @@ const Home = ({ socket }: any) => {
       dispatch(getConversations(user.token));
     }
   }, [user]);
+
+  // call useEffect
+  useEffect(() => {
+    setupMedia();
+    socket.on("setup socket", (id: string) => {
+      setCall({ ...call, socketId: id });
+    });
+  }, []);
+  const setupMedia = () => {
+    navigator.mediaDevices
+      .getUserMedia({
+        video: true,
+        audio: true,
+      })
+      .then((stream: any) => {
+        setStream(stream);
+        myVideo.current.srcObject = stream;
+      });
+  };
 
   useEffect(() => {
     // listening to recieved message
