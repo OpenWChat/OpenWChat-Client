@@ -1,2 +1,3 @@
 export * from "./welcome";
-export * from './ChatContainer'
+export * from "./ChatContainer";
+export * from "./call";
