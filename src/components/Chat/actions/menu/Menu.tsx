@@ -1,11 +1,6 @@
-import {
-  CameraIcon,
-  ContactIcon,
-  DocumentIcon,
-  PhotoIcon,
-  PollIcon,
-  StickerIcon,
-} from "@/svg";
+import { CameraIcon, ContactIcon, PollIcon, StickerIcon } from "@/svg";
+import { PhotoAttachments } from "./PhotoAttachments";
+import { DocumentAttachments } from "./DocumentAttachments";
 
 export const Menu = () => {
   return (
@@ -20,11 +15,7 @@ export const Menu = () => {
           <ContactIcon />
         </button>
       </li>
-      <li>
-        <button type="button" className="rounded-full bg-[#5F66CD]">
-          <DocumentIcon />
-        </button>
-      </li>
+      <DocumentAttachments />
       <li>
         <button type="button" className="rounded-full bg-[#D3396D]">
           <CameraIcon />
@@ -35,11 +26,7 @@ export const Menu = () => {
           <StickerIcon />
         </button>
       </li>
-      <li>
-        <button type="button" className="rounded-full bg-[#BF59CF]">
-          <PhotoIcon />
-        </button>
-      </li>
+      <PhotoAttachments />
     </ul>
   );
 };

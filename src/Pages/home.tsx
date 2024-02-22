@@ -1,17 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ChatContainer, Sidebar } from "@/components";
+import { Call, ChatContainer, Sidebar } from "@/components";
 import { WhatsAppHome } from "@/components";
 import SocketContext from "@/context/SocketContext";
-import { getConversations, updateMessagesAndConversations } from "@/features";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
+import { getConversations, updateMessagesAndConversations } from "@/features";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+const callData = {
+  receivingCall: false,
+  callEnded: false,
+  socketId: "",
+};
 const Home = ({ socket }: any) => {
   const dispatch: any = useDispatch();
   const { user } = useSelector((state: any) => state.user);
   const { activeConversation } = useSelector((state: any) => state.chat);
   const [onlineUsers, setOnlineUsers] = useState([]);
+  const [call, setCall] = useState(callData);
+  const [stream, setStream] = useState();
+  const myVideo: any = useRef();
+  const userVideo: any = useRef();
+
+  const [callAccepted, setCallAccepted] = useState(false);
+  const { callEnded, receivingCall, socketId } = call;
   const [typing, setTyping] = useState(false);
   // join user into socket io
   useEffect(() => {
@@ -28,6 +40,25 @@ const Home = ({ socket }: any) => {
     }
   }, [user]);
 
+  // call useEffect
+  useEffect(() => {
+    setupMedia();
+    socket.on("setup socket", (id: string) => {
+      setCall({ ...call, socketId: id });
+    });
+  }, []);
+  const setupMedia = () => {
+    navigator.mediaDevices
+      .getUserMedia({
+        video: true,
+        audio: true,
+      })
+      .then((stream: any) => {
+        setStream(stream);
+        myVideo.current.srcObject = stream;
+      });
+  };
+
   useEffect(() => {
     // listening to recieved message
     socket.on("message received", (message: any) => {
@@ -43,13 +74,21 @@ const Home = ({ socket }: any) => {
       {/* Container */}
       <div className="container h-screen flex py-[19px]">
         {/* Sidebar */}
-        <Sidebar onlineUsers={onlineUsers} typing={typing}/>
+        <Sidebar onlineUsers={onlineUsers} typing={typing} />
         {activeConversation._id ? (
           <ChatContainer onlineUsers={onlineUsers} typing={typing} />
         ) : (
           <WhatsAppHome />
         )}
       </div>
+      <Call
+        call={call}
+        setCall={setCall}
+        callAccepted={callAccepted}
+        userVideo={userVideo}
+        myVideo={myVideo}
+        stream={stream}
+      />
     </div>
   );
 };

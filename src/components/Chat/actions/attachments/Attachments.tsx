@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AttachmentIcon, CloseIcon } from "@/svg";
-import { Menu } from "./Menu";
+import { Menu } from "..";
 
 export const Attachments = ({
   setShowPicker,
