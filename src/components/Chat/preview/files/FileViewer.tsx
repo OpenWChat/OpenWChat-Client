@@ -13,6 +13,12 @@ export const FileViewer = ({ activeIndex }: { activeIndex: number }) => {
             alt="image"
             className="max-w-[80%] object-contain hview"
           />
+        ) : files[activeIndex]?.type === "VIDEO" ? (
+          <video
+            src={files[activeIndex]?.fileData}
+            controls
+            className="max-w-[80%] object-contain hview"
+          />
         ) : (
           <div className="min-w-full hview flex flex-col items-center justify-center">
             {/* File Icon Image */}

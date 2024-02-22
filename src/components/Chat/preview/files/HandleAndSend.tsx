@@ -43,7 +43,7 @@ export const HandleAndSendWithoutSocket = ({
     setLoading(false);
     dispatch(clearFiles());
   };
-  const handleRemoveFile = (index:number) => {
+  const handleRemoveFile = (index: number) => {
     dispatch(removeFileFromFiles(index));
   };
   return (
@@ -66,6 +66,8 @@ export const HandleAndSendWithoutSocket = ({
                 alt="image"
                 className="w-full h-full object-cover"
               />
+            ) : files[activeIndex]?.type === "VIDEO" ? (
+              <video src={files[activeIndex]?.fileData} />
             ) : (
               <img
                 src={`/images/file/${file?.type}.png`}

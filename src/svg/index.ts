@@ -25,3 +25,4 @@ export * from "./Send";
 export * from "./SmallArrow";
 export * from "./Sticker";
 export * from "./Story";
+export * from './Download'
